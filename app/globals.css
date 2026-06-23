@@ -1,21 +1,26 @@
 :root {
-  color-scheme: light;
-  --bg: #f4efe8;
-  --bg-alt: #f9f6f1;
-  --surface: rgba(255, 255, 255, 0.58);
-  --surface-strong: rgba(255, 255, 255, 0.86);
-  --text: #151311;
-  --muted: rgba(21, 19, 17, 0.62);
-  --line: rgba(21, 19, 17, 0.12);
-  --shadow: 0 28px 90px rgba(17, 14, 12, 0.14);
-  --display: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia,
-    serif;
-  --body: "Inter", "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont,
-    sans-serif;
-  --measure: min(1180px, calc(100vw - 32px));
+  color-scheme: dark;
+  --ground: #0e0b08;
+  --ground-alt: #111009;
+  --text: #f5efe6;
+  --muted: rgba(245, 239, 230, 0.44);
+  --faint: rgba(245, 239, 230, 0.2);
+  --accent: #e09128;
+  --surface: rgba(245, 239, 230, 0.055);
+  --surface-mid: rgba(245, 239, 230, 0.08);
+  --surface-strong: rgba(245, 239, 230, 0.12);
+  --line: rgba(245, 239, 230, 0.09);
+  --line-mid: rgba(245, 239, 230, 0.14);
+  --shadow: 0 24px 80px rgba(0, 0, 0, 0.65);
+  --shadow-sm: 0 8px 32px rgba(0, 0, 0, 0.5);
+  --display: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+  --body: system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+  --measure: min(1160px, calc(100vw - 40px));
 }
 
-* {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
@@ -26,12 +31,8 @@ html {
 body {
   margin: 0;
   min-height: 100vh;
+  background: var(--ground);
   color: var(--text);
-  background:
-    radial-gradient(circle at top left, rgba(255, 255, 255, 0.8), transparent 22%),
-    radial-gradient(circle at 15% 16%, rgba(204, 184, 158, 0.2), transparent 20%),
-    radial-gradient(circle at 80% 12%, rgba(144, 171, 194, 0.16), transparent 18%),
-    linear-gradient(180deg, var(--bg) 0%, var(--bg-alt) 100%);
   font-family: var(--body);
   overflow-x: hidden;
   text-rendering: optimizeLegibility;
@@ -50,74 +51,40 @@ a {
 }
 
 ::selection {
-  background: rgba(15, 15, 16, 0.16);
+  background: rgba(224, 145, 40, 0.28);
 }
+
+/* ─── Shell ───────────────────────────────────────────────────────────────── */
 
 .journey-shell {
   position: relative;
   isolation: isolate;
 }
 
-.journey-orb,
-.journey-grain {
+/* Ambient lamp glow — warm halo on the right where the lantern lives */
+.lamp-ambient {
   position: fixed;
+  z-index: 6;
   inset: 0;
   pointer-events: none;
+  background: radial-gradient(
+    ellipse at 74% 46%,
+    rgba(224, 145, 40, 0.09) 0%,
+    transparent 55%
+  );
 }
 
-.journey-orb {
-  filter: blur(22px);
-  opacity: 0.65;
-  mix-blend-mode: multiply;
-}
-
-.journey-orb-a {
-  background:
-    radial-gradient(circle at 18% 22%, rgba(209, 182, 136, 0.38), transparent 22%),
-    radial-gradient(circle at 82% 16%, rgba(129, 160, 214, 0.22), transparent 18%);
-}
-
-.journey-orb-b {
-  background:
-    radial-gradient(circle at 68% 74%, rgba(110, 132, 176, 0.18), transparent 22%),
-    radial-gradient(circle at 28% 82%, rgba(196, 155, 123, 0.2), transparent 18%);
-}
-
-.journey-grain {
-  opacity: 0.07;
-  background-image:
-    linear-gradient(rgba(255, 255, 255, 0.65) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.65) 1px, transparent 1px);
-  background-size: 3px 3px;
-  mix-blend-mode: soft-light;
-}
+/* ─── Nav ─────────────────────────────────────────────────────────────────── */
 
 .journey-topbar {
   position: fixed;
   z-index: 40;
-  inset: 18px 18px auto;
+  inset: 20px 20px auto;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 16px;
   pointer-events: none;
-}
-
-.lamp-rig {
-  position: fixed;
-  z-index: 18;
-  inset: 0;
-  display: grid;
-  place-items: center;
-  pointer-events: none;
-  mix-blend-mode: normal;
-}
-
-.lamp-rig .model-stage {
-  width: min(48vw, 620px);
-  height: min(48vw, 620px);
-  transform-origin: center center;
-  will-change: transform;
 }
 
 .brand-lockup,
@@ -128,39 +95,45 @@ a {
 .brand-lockup {
   display: inline-flex;
   flex-direction: column;
-  gap: 3px;
-  padding: 14px 18px;
+  gap: 4px;
+  padding: 12px 20px;
   border-radius: 999px;
-  background: var(--surface);
+  background: rgba(14, 11, 8, 0.88);
   border: 1px solid var(--line);
-  backdrop-filter: blur(18px);
-  box-shadow: var(--shadow);
+  backdrop-filter: blur(24px);
+  box-shadow: var(--shadow-sm);
+  transition: transform 180ms ease;
 }
 
 .brand-lockup span {
-  font-size: 0.95rem;
-  letter-spacing: 0.04em;
+  font-size: 0.88rem;
+  letter-spacing: 0.07em;
   text-transform: uppercase;
-  font-weight: 650;
+  font-weight: 600;
+  color: var(--text);
 }
 
 .brand-lockup small {
   color: var(--muted);
-  font-size: 0.72rem;
-  letter-spacing: 0.14em;
+  font-size: 0.66rem;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
+}
+
+.brand-lockup:hover {
+  transform: translateY(-1px);
 }
 
 .chapter-rail {
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 10px;
+  padding: 10px 12px;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.42);
+  background: rgba(14, 11, 8, 0.84);
   border: 1px solid var(--line);
-  backdrop-filter: blur(18px);
-  box-shadow: var(--shadow);
+  backdrop-filter: blur(24px);
+  box-shadow: var(--shadow-sm);
 }
 
 .chapter-dot {
@@ -168,14 +141,14 @@ a {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 14px;
-  height: 14px;
+  width: 8px;
+  height: 8px;
   border-radius: 999px;
-  background: rgba(21, 19, 17, 0.16);
+  background: rgba(245, 239, 230, 0.18);
   transition:
-    transform 180ms ease,
-    background 180ms ease,
-    width 180ms ease;
+    width 220ms ease,
+    background 220ms ease,
+    transform 220ms ease;
 }
 
 .chapter-dot span {
@@ -183,370 +156,53 @@ a {
   top: calc(100% + 10px);
   left: 50%;
   transform: translateX(-50%);
-  padding: 0.32rem 0.55rem;
+  padding: 0.28rem 0.52rem;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.7);
+  background: rgba(14, 11, 8, 0.94);
   border: 1px solid var(--line);
   color: var(--muted);
-  font-size: 0.64rem;
+  font-size: 0.62rem;
   text-transform: uppercase;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.18em;
   white-space: nowrap;
   opacity: 0;
-  transition: opacity 180ms ease, transform 180ms ease;
+  transition: opacity 180ms ease;
+  pointer-events: none;
 }
 
 .chapter-dot.active,
 .chapter-dot:hover {
-  width: 34px;
-  background: var(--text);
-  transform: scale(1.02);
+  width: 30px;
+  background: var(--accent);
 }
 
 .chapter-dot.active span,
 .chapter-dot:hover span {
   opacity: 1;
-  transform: translateX(-50%) translateY(0);
 }
 
-.intro-frame {
-  min-height: 100vh;
-  width: var(--measure);
-  margin: 0 auto;
-  padding: 152px 0 64px;
-  display: grid;
-  align-content: center;
-  gap: 22px;
-}
+/* ─── Lamp ────────────────────────────────────────────────────────────────── */
 
-.intro-eyebrow,
-.scene-kicker {
-  margin: 0;
-  color: var(--muted);
-  text-transform: uppercase;
-  letter-spacing: 0.2em;
-  font-size: 0.72rem;
-  font-weight: 700;
-}
-
-.intro-frame h1,
-.scene-copy h2,
-.epilogue-card h2 {
-  margin: 0;
-  font-family: var(--display);
-  letter-spacing: -0.06em;
-  line-height: 0.95;
-}
-
-.intro-frame h1 {
-  max-width: 12ch;
-  font-size: clamp(3.7rem, 7.8vw, 7.8rem);
-}
-
-.intro-copy {
-  max-width: 46ch;
-  margin: 0;
-  color: var(--muted);
-  font-size: clamp(1.02rem, 1.2vw, 1.15rem);
-  line-height: 1.75;
-}
-
-.storyline {
-  position: relative;
-}
-
-.scene {
-  position: relative;
-  min-height: 210vh;
-  --progress: 0;
-  --depth: 0;
-}
-
-.scene-sticky {
-  position: sticky;
-  top: 0;
-  height: 100vh;
-  overflow: clip;
-  display: grid;
-  align-items: center;
-  grid-template-columns: minmax(320px, 1.1fr) minmax(220px, 0.7fr);
-  gap: 24px;
-  width: var(--measure);
-  margin: 0 auto;
-  padding: 108px 0 88px;
-}
-
-.scene::before,
-.scene::after {
-  content: "";
-  position: absolute;
+.lamp-rig {
+  position: fixed;
+  z-index: 18;
   inset: 0;
-  pointer-events: none;
-}
-
-.scene::before {
-  opacity: calc(0.24 + (var(--progress) * 0.22));
-  background:
-    radial-gradient(circle at 18% 14%, rgba(255, 255, 255, 0.55), transparent 18%),
-    radial-gradient(circle at 84% 18%, rgba(255, 255, 255, 0.2), transparent 20%),
-    radial-gradient(circle at 50% 82%, rgba(255, 255, 255, 0.12), transparent 24%);
-}
-
-.scene::after {
-  transform: translateY(calc((1 - var(--progress)) * 18px));
-  background:
-    linear-gradient(180deg, transparent 0%, rgba(255, 255, 255, 0.04) 48%, transparent 100%);
-  opacity: 0.8;
-}
-
-.scene-sticky > * {
-  position: relative;
-  z-index: 1;
-}
-
-.scene-backdrop {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-}
-
-.backdrop-ring,
-.backdrop-grid {
-  position: absolute;
-  inset: auto;
-  pointer-events: none;
-}
-
-.backdrop-ring {
-  border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.22);
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06);
-  filter: blur(0.2px);
-  transform: translate3d(0, calc(var(--depth) * -20px), 0);
-}
-
-.backdrop-ring-a {
-  width: 36vw;
-  height: 36vw;
-  left: -4vw;
-  top: 8vh;
-  background:
-    radial-gradient(circle, rgba(255, 255, 255, 0.16), transparent 58%),
-    radial-gradient(circle at 30% 32%, rgba(255, 255, 255, 0.2), transparent 34%);
-  opacity: calc(0.35 + (var(--progress) * 0.35));
-}
-
-.backdrop-ring-b {
-  width: 22vw;
-  height: 22vw;
-  right: 4vw;
-  bottom: 10vh;
-  background:
-    radial-gradient(circle, rgba(255, 255, 255, 0.18), transparent 58%),
-    radial-gradient(circle at 58% 42%, rgba(255, 255, 255, 0.15), transparent 36%);
-  opacity: calc(0.28 + (var(--progress) * 0.4));
-}
-
-.backdrop-grid {
-  inset: 12% 10% 10%;
-  border-radius: 40px;
-  background:
-    linear-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.08) 1px, transparent 1px);
-  background-size: 54px 54px;
-  mask-image: radial-gradient(circle at center, black 48%, transparent 92%);
-  opacity: calc(0.2 + (var(--progress) * 0.15));
-}
-
-.scene-copy {
-  align-self: center;
-  max-width: 520px;
-  padding: 26px 0;
-  transform:
-    translate3d(0, calc((1 - var(--progress)) * 42px), 0)
-    scale(calc(0.95 + var(--progress) * 0.05));
-  opacity: calc(0.56 + (var(--progress) * 0.44));
-  transition: opacity 80ms linear;
-}
-
-.scene-copy h2 {
-  margin-top: 16px;
-  font-size: clamp(2.8rem, 4.8vw, 5.4rem);
-}
-
-.scene-text {
-  margin: 18px 0 0;
-  max-width: 38ch;
-  color: var(--muted);
-  line-height: 1.75;
-  font-size: clamp(1rem, 1.18vw, 1.12rem);
-}
-
-.scene-metrics {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 24px;
-}
-
-.scene-metrics span,
-.detail-card p,
-.epilogue-actions a {
-  border: 1px solid var(--line);
-}
-
-.scene-metrics span {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0.58rem 0.88rem;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.48);
-  color: rgba(21, 19, 17, 0.78);
-  font-size: 0.86rem;
-  letter-spacing: 0.01em;
-  backdrop-filter: blur(14px);
-}
-
-.scene-visual {
-  justify-self: end;
-  width: min(100%, 560px);
-  height: min(70vh, 700px);
   display: grid;
   place-items: center;
+  pointer-events: none;
 }
 
-.scene-side {
-  align-self: end;
-  display: grid;
-  gap: 18px;
-  justify-items: start;
-  padding-bottom: 12px;
-}
-
-.scene-side-card {
-  display: grid;
-  gap: 10px;
-  align-self: start;
-  max-width: 24ch;
-  padding: 18px 18px 20px;
-  border-radius: 24px;
-  background: rgba(255, 255, 255, 0.42);
-  border: 1px solid var(--line);
-  box-shadow: var(--shadow);
-  backdrop-filter: blur(16px);
-}
-
-.scene-side-card span {
-  color: var(--muted);
-  text-transform: uppercase;
-  letter-spacing: 0.16em;
-  font-size: 0.66rem;
-  font-weight: 700;
-}
-
-.scene-side-card strong {
-  font-size: 1.05rem;
-  line-height: 1.45;
-  letter-spacing: -0.03em;
-}
-
-.visual-shell {
-  width: 100%;
-  height: 100%;
-  padding: 18px;
-  border-radius: 36px;
-  background: rgba(255, 255, 255, 0.24);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(20px);
-  box-shadow: var(--shadow);
-  transform:
-    translate3d(calc(var(--depth) * 22px), calc(var(--depth) * -16px), 0)
-    rotate(calc(var(--depth) * 1.25deg));
-}
-
-.visual-stage {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  border-radius: 28px;
-}
-
-.visual-frame {
-  position: absolute;
-  inset: 0;
-  border-radius: 34px;
-  overflow: hidden;
-  transform-origin: center;
-  transition:
-    transform 120ms linear,
-    opacity 120ms linear,
-    border-radius 120ms linear;
-}
-
-.frame-one {
-  transform:
-    translate3d(calc((1 - var(--progress)) * -28px), calc((1 - var(--progress)) * 18px), 0)
-    scale(calc(0.92 + var(--progress) * 0.08));
-  opacity: calc(0.26 + (var(--progress) * 0.68));
-  z-index: 3;
-}
-
-.frame-two {
-  transform:
-    translate3d(calc((1 - var(--progress)) * 38px), calc((1 - var(--progress)) * -14px), 0)
-    rotate(calc((1 - var(--progress)) * -3deg))
-    scale(calc(0.78 + var(--progress) * 0.22));
-  opacity: calc(0.14 + (var(--progress) * 0.58));
-  z-index: 2;
-}
-
-.frame-three {
-  transform:
-    translate3d(calc((1 - var(--progress)) * 72px), calc((1 - var(--progress)) * 38px), 0)
-    rotate(calc((1 - var(--progress)) * 5deg))
-    scale(calc(0.66 + var(--progress) * 0.28));
-  opacity: calc(0.08 + (var(--progress) * 0.46));
-  z-index: 1;
-}
-
-.frame-glow {
-  position: absolute;
-  inset: -12%;
-  background:
-    radial-gradient(circle at 32% 24%, rgba(255, 255, 255, 0.4), transparent 24%),
-    radial-gradient(circle at 72% 30%, rgba(255, 255, 255, 0.18), transparent 22%),
-    radial-gradient(circle at 50% 80%, rgba(255, 255, 255, 0.14), transparent 30%);
-  filter: blur(18px);
-}
-
-.frame-content {
-  position: absolute;
-  inset: 18px;
-  border-radius: 28px;
-  background: rgba(255, 255, 255, 0.68);
-  border: 1px solid rgba(255, 255, 255, 0.42);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7);
-  overflow: hidden;
-}
-
-.frame-model .frame-content {
-  display: grid;
-  grid-template-rows: 1fr auto;
-  background:
-    radial-gradient(circle at 30% 24%, rgba(255, 255, 255, 0.72), transparent 22%),
-    linear-gradient(180deg, rgba(250, 247, 243, 0.94), rgba(225, 221, 214, 0.68));
-}
-
-.model-content {
-  padding: 18px;
+.lamp-rig .model-stage {
+  width: min(52vw, 680px);
+  height: min(52vw, 680px);
+  transform-origin: center center;
+  will-change: transform;
 }
 
 .model-stage {
   position: relative;
   width: 100%;
-  min-height: 100%;
-  border-radius: 24px;
+  height: 100%;
   overflow: hidden;
   background: transparent;
 }
@@ -566,296 +222,406 @@ a {
   gap: 8px;
   text-align: center;
   color: var(--muted);
-  background: rgba(255, 255, 255, 0.45);
+  font-size: 0.85rem;
 }
 
 .model-fallback strong {
   color: var(--text);
-  font-size: 0.95rem;
+  font-size: 0.92rem;
   letter-spacing: 0.04em;
 }
 
-.scene-blue .frame-content {
-  background: linear-gradient(180deg, rgba(245, 248, 255, 0.82), rgba(225, 236, 250, 0.56));
+/* ─── Intro ───────────────────────────────────────────────────────────────── */
+
+.intro-frame {
+  min-height: 100vh;
+  width: var(--measure);
+  margin: 0 auto;
+  padding: 160px 0 100px;
+  display: grid;
+  align-content: end;
+  gap: 0;
+  padding-bottom: 14vh;
 }
 
-.scene-violet .frame-content {
-  background: linear-gradient(180deg, rgba(250, 245, 255, 0.84), rgba(236, 229, 249, 0.56));
+.intro-eyebrow {
+  margin: 0 0 18px;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.24em;
+  font-size: 0.68rem;
+  font-weight: 600;
 }
 
-.scene-graphite .frame-content {
-  background: linear-gradient(180deg, rgba(245, 245, 245, 0.84), rgba(227, 227, 229, 0.58));
+.intro-frame h1 {
+  margin: 0;
+  font-family: var(--display);
+  letter-spacing: -0.065em;
+  line-height: 0.9;
+  font-size: clamp(4rem, 8.8vw, 9.2rem);
+  max-width: 10ch;
+  color: var(--text);
 }
 
-.frame-header {
-  display: flex;
-  gap: 7px;
-  padding: 18px 18px 0;
+.intro-copy {
+  max-width: 38ch;
+  margin: 26px 0 0;
+  color: var(--muted);
+  font-size: clamp(0.98rem, 1.12vw, 1.08rem);
+  line-height: 1.82;
 }
 
-.frame-header span {
-  width: 10px;
-  height: 10px;
+.intro-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 32px;
+  padding: 0.82rem 1.4rem;
   border-radius: 999px;
-  background: rgba(21, 19, 17, 0.18);
+  background: var(--surface);
+  border: 1px solid var(--line-mid);
+  color: var(--text);
+  font-size: 0.88rem;
+  letter-spacing: 0.02em;
+  transition: background 180ms ease, transform 180ms ease;
+  width: fit-content;
 }
 
-.frame-image {
-  margin: 16px;
-  border-radius: 24px;
+.intro-cta:hover {
+  background: var(--surface-mid);
+  transform: translateY(-1px);
+}
+
+/* ─── Storyline & scenes ──────────────────────────────────────────────────── */
+
+.storyline {
   position: relative;
-  overflow: hidden;
-  isolation: isolate;
-  min-height: 58%;
 }
 
-.frame-image::before,
-.frame-image::after {
+.scene {
+  position: relative;
+  min-height: 210vh;
+  --progress: 0;
+  --depth: 0;
+}
+
+.scene::before {
   content: "";
   position: absolute;
   inset: 0;
+  pointer-events: none;
+  opacity: calc(0.06 + var(--progress) * 0.1);
 }
 
-.frame-image-a {
-  background:
-    radial-gradient(circle at 24% 26%, rgba(255, 228, 173, 0.85), transparent 20%),
-    radial-gradient(circle at 78% 26%, rgba(97, 139, 214, 0.68), transparent 18%),
-    linear-gradient(145deg, rgba(18, 18, 20, 0.92), rgba(48, 50, 58, 0.85));
+.scene-gold::before {
+  background: radial-gradient(ellipse at 28% 50%, rgba(224, 145, 40, 0.18), transparent 55%);
 }
 
-.frame-image-a::before {
-  background:
-    linear-gradient(125deg, rgba(255, 255, 255, 0.14), transparent 40%),
-    linear-gradient(180deg, transparent, rgba(255, 255, 255, 0.06));
-  mix-blend-mode: screen;
+.scene-blue::before {
+  background: radial-gradient(ellipse at 28% 50%, rgba(74, 126, 200, 0.16), transparent 55%);
 }
 
-.frame-image-a::after {
-  inset: 16% 18%;
-  border-radius: 22px;
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.82), rgba(255, 255, 255, 0.08)),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.78) 0 28%, transparent 28% 72%, rgba(255, 255, 255, 0.78) 72%);
-  mask-image: linear-gradient(180deg, black, transparent 96%);
-  transform: translate3d(0, calc((1 - var(--progress)) * 24px), 0) scale(calc(0.96 + var(--progress) * 0.04));
+.scene-violet::before {
+  background: radial-gradient(ellipse at 28% 50%, rgba(130, 80, 220, 0.14), transparent 55%);
 }
 
-.frame-image-b {
-  min-height: 70%;
-  background:
-    radial-gradient(circle at 18% 18%, rgba(122, 165, 255, 0.84), transparent 19%),
-    radial-gradient(circle at 78% 22%, rgba(143, 108, 255, 0.86), transparent 18%),
-    linear-gradient(160deg, rgba(16, 20, 32, 0.96), rgba(44, 50, 68, 0.82));
+.scene-graphite::before {
+  background: radial-gradient(ellipse at 28% 50%, rgba(160, 155, 150, 0.1), transparent 55%);
 }
 
-.frame-image-b::before {
-  inset: 14% 12% 10%;
-  border-radius: 26px;
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.82), rgba(255, 255, 255, 0.08)),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.78) 0 18%, transparent 18% 32%, rgba(255, 255, 255, 0.78) 32% 48%, transparent 48% 68%, rgba(255, 255, 255, 0.78) 68% 86%, transparent 86%);
-  clip-path: polygon(10% 4%, 93% 0%, 100% 90%, 0% 100%);
-  transform:
-    translate3d(calc((1 - var(--progress)) * 20px), calc(var(--progress) * -10px), 0)
-    rotate(calc((1 - var(--progress)) * -2deg));
-  opacity: calc(0.62 + (var(--progress) * 0.38));
-}
-
-.frame-image-b::after {
-  inset: auto 12% 12%;
-  height: 18%;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.16);
-  filter: blur(1px);
-}
-
-.frame-image-c {
-  min-height: 100%;
-  background:
-    radial-gradient(circle at 18% 18%, rgba(200, 200, 203, 0.85), transparent 17%),
-    radial-gradient(circle at 74% 24%, rgba(128, 133, 146, 0.84), transparent 18%),
-    linear-gradient(150deg, rgba(23, 24, 26, 0.96), rgba(54, 56, 60, 0.88));
-}
-
-.frame-image-c::before {
-  inset: 12%;
-  border-radius: calc(30px - (var(--progress) * 10px));
-  border: 1px solid rgba(255, 255, 255, 0.22);
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.16), transparent 28%),
-    linear-gradient(145deg, rgba(255, 255, 255, 0.08), transparent 42%),
-    linear-gradient(135deg, rgba(29, 31, 35, 0.88), rgba(8, 9, 11, 0.54));
-  transform:
-    translate3d(calc((1 - var(--progress)) * -16px), calc((1 - var(--progress)) * 16px), 0)
-    scale(calc(0.86 + var(--progress) * 0.14));
-}
-
-.frame-image-c::after {
-  inset: 26% 28%;
-  border-radius: 50%;
-  background:
-    radial-gradient(circle, rgba(255, 255, 255, 0.72), transparent 52%),
-    radial-gradient(circle at 42% 38%, rgba(255, 255, 255, 0.18), transparent 30%);
-  transform: translate3d(0, calc((1 - var(--progress)) * 10px), 0) scale(calc(0.7 + var(--progress) * 0.3));
-  opacity: calc(0.3 + var(--progress) * 0.7);
-}
-
-.frame-caption {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  padding: 0 18px 18px;
-  color: rgba(21, 19, 17, 0.68);
-  font-size: 0.82rem;
-}
-
-.frame-caption strong {
-  letter-spacing: 0.02em;
-}
-
-.frame-mini-grid {
+.scene-sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: clip;
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 10px;
-  padding: 0 16px 16px;
+  align-items: center;
+  grid-template-columns: minmax(300px, 1fr) minmax(200px, 0.6fr);
+  gap: 24px;
+  width: var(--measure);
+  margin: 0 auto;
+  padding: 112px 0 92px;
 }
 
-.frame-mini-grid span {
-  height: 66px;
-  border-radius: 18px;
-  background: rgba(255, 255, 255, 0.56);
-  border: 1px solid rgba(255, 255, 255, 0.3);
+.scene-sticky > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Backdrop — very subtle, provides depth without competing with lamp */
+.scene-backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.backdrop-ring {
+  position: absolute;
+  border-radius: 999px;
+  pointer-events: none;
+  transform: translate3d(0, calc(var(--depth) * -18px), 0);
+}
+
+.backdrop-ring-a {
+  width: 38vw;
+  height: 38vw;
+  left: -5vw;
+  top: 6vh;
+  background: radial-gradient(circle, rgba(245, 239, 230, 0.025), transparent 62%);
+  border: 1px solid rgba(245, 239, 230, 0.04);
+  opacity: calc(0.3 + var(--progress) * 0.5);
+}
+
+.backdrop-ring-b {
+  width: 20vw;
+  height: 20vw;
+  right: 8vw;
+  bottom: 12vh;
+  background: radial-gradient(circle, rgba(245, 239, 230, 0.02), transparent 62%);
+  border: 1px solid rgba(245, 239, 230, 0.03);
+  opacity: calc(0.2 + var(--progress) * 0.4);
+}
+
+.backdrop-grid {
+  position: absolute;
+  inset: 14% 12% 12%;
+  border-radius: 40px;
+  background:
+    linear-gradient(rgba(245, 239, 230, 0.022) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(245, 239, 230, 0.022) 1px, transparent 1px);
+  background-size: 58px 58px;
+  mask-image: radial-gradient(ellipse at center, black 30%, transparent 82%);
+  opacity: calc(0.12 + var(--progress) * 0.18);
+}
+
+/* ─── Scene copy ──────────────────────────────────────────────────────────── */
+
+.scene-copy {
+  align-self: center;
+  max-width: 480px;
+  padding: 0;
+  transform: translate3d(0, calc((1 - var(--progress)) * 38px), 0);
+  opacity: calc(0.48 + var(--progress) * 0.52);
+  transition: opacity 60ms linear;
+}
+
+.scene-kicker {
+  margin: 0 0 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.24em;
+  font-size: 0.66rem;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+/* Scene accent colors applied to kicker */
+.scene-gold .scene-kicker { color: var(--accent); }
+.scene-blue .scene-kicker { color: #5b8fd8; }
+.scene-violet .scene-kicker { color: #9b72d8; }
+.scene-graphite .scene-kicker { color: #9e9892; }
+
+.scene-copy h2 {
+  margin: 0 0 16px;
+  font-family: var(--display);
+  letter-spacing: -0.055em;
+  line-height: 0.95;
+  font-size: clamp(2.6rem, 4.4vw, 5.2rem);
+  color: var(--text);
+}
+
+.scene-text {
+  margin: 0;
+  max-width: 36ch;
+  color: var(--muted);
+  line-height: 1.8;
+  font-size: clamp(0.94rem, 1.08vw, 1.06rem);
+}
+
+.scene-metrics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 24px;
+}
+
+.scene-metrics span {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.4rem 0.72rem;
+  border-radius: 999px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  color: var(--faint);
+  font-size: 0.76rem;
+  letter-spacing: 0.04em;
+  font-family: var(--body);
+}
+
+/* ─── Scene side ──────────────────────────────────────────────────────────── */
+
+.scene-side {
+  align-self: end;
+  display: grid;
+  gap: 18px;
+  justify-items: start;
+  padding-bottom: 12px;
+}
+
+.scene-side-card {
+  display: grid;
+  gap: 8px;
+  max-width: 22ch;
+  padding: 16px 18px 18px;
+  border-radius: 20px;
+  background: rgba(14, 11, 8, 0.78);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow-sm);
+  backdrop-filter: blur(24px);
+}
+
+.scene-side-card span {
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  font-size: 0.62rem;
+  font-weight: 600;
+}
+
+.scene-side-card strong {
+  font-size: 0.96rem;
+  line-height: 1.48;
+  letter-spacing: -0.025em;
+  color: var(--text);
 }
 
 .scene-foot {
   position: absolute;
   left: 0;
   right: 0;
-  bottom: 28px;
+  bottom: 26px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  color: rgba(21, 19, 17, 0.72);
+  color: var(--muted);
 }
 
 .chapter-index {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  padding: 12px 14px;
+  gap: 8px;
+  padding: 10px 14px;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.42);
+  background: rgba(14, 11, 8, 0.82);
   border: 1px solid var(--line);
-  backdrop-filter: blur(16px);
+  backdrop-filter: blur(18px);
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
 }
 
 .scene-icon {
-  width: 18px;
-  height: 18px;
-  fill: currentColor;
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  opacity: 0.7;
 }
 
 .scene-note {
   display: inline-flex;
-  align-items: flex-end;
-  gap: 12px;
-  padding: 12px 14px;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.42);
+  background: rgba(14, 11, 8, 0.82);
   border: 1px solid var(--line);
-  backdrop-filter: blur(16px);
+  backdrop-filter: blur(18px);
 }
 
 .scene-note span {
   color: var(--muted);
   text-transform: uppercase;
-  letter-spacing: 0.16em;
-  font-size: 0.66rem;
+  letter-spacing: 0.2em;
+  font-size: 0.62rem;
 }
 
 .scene-note strong {
-  font-size: 0.84rem;
-  letter-spacing: 0.02em;
+  font-size: 0.8rem;
+  letter-spacing: 0.03em;
+  color: var(--text);
 }
 
-.scene-gold .visual-shell {
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.14)),
-    radial-gradient(circle at 20% 20%, rgba(233, 199, 144, 0.2), transparent 34%);
-}
-
-.scene-blue .visual-shell {
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.23), rgba(255, 255, 255, 0.12)),
-    radial-gradient(circle at 68% 18%, rgba(137, 180, 255, 0.18), transparent 34%);
-}
-
-.scene-violet .visual-shell {
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.23), rgba(255, 255, 255, 0.12)),
-    radial-gradient(circle at 68% 18%, rgba(191, 155, 255, 0.18), transparent 34%);
-}
-
-.scene-graphite .visual-shell {
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0.1)),
-    radial-gradient(circle at 64% 16%, rgba(188, 188, 192, 0.18), transparent 34%);
-}
+/* ─── Epilogue ────────────────────────────────────────────────────────────── */
 
 .epilogue {
   width: var(--measure);
   margin: 0 auto;
-  padding: 24px 0 92px;
+  padding: 24px 0 100px;
 }
 
 .epilogue-card {
   display: grid;
-  gap: 28px;
-  padding: 34px;
-  border-radius: 34px;
-  background: var(--surface);
+  gap: 32px;
+  padding: 40px;
+  border-radius: 32px;
+  background: rgba(14, 11, 8, 0.9);
   border: 1px solid var(--line);
-  backdrop-filter: blur(20px);
+  backdrop-filter: blur(28px);
   box-shadow: var(--shadow);
 }
 
+.epilogue-kicker {
+  color: var(--accent) !important;
+}
+
 .epilogue-card h2 {
-  max-width: 13ch;
-  margin-top: 16px;
-  font-size: clamp(2.4rem, 4.6vw, 4.8rem);
+  margin: 14px 0 0;
+  font-family: var(--display);
+  letter-spacing: -0.055em;
+  line-height: 0.94;
+  font-size: clamp(2.2rem, 4.2vw, 4.6rem);
+  max-width: 14ch;
+  color: var(--text);
 }
 
 .epilogue-details {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 16px;
+  gap: 14px;
 }
 
 .detail-card {
   display: grid;
   gap: 12px;
   padding: 22px;
-  border-radius: 24px;
-  background: rgba(255, 255, 255, 0.42);
+  border-radius: 20px;
+  background: var(--surface);
   border: 1px solid var(--line);
+}
+
+.detail-card .scene-icon {
+  opacity: 0.4;
+  width: 18px;
+  height: 18px;
 }
 
 .detail-card h3 {
   margin: 0;
-  font-size: 1.08rem;
-  letter-spacing: -0.04em;
+  font-size: 1rem;
+  letter-spacing: -0.035em;
+  color: var(--text);
+  line-height: 1.3;
 }
 
 .detail-card p {
   margin: 0;
-  padding: 14px 0 0;
-  border: 0;
+  padding: 12px 0 0;
   border-top: 1px solid var(--line);
   color: var(--muted);
-  line-height: 1.7;
+  line-height: 1.74;
+  font-size: 0.88rem;
 }
+
+/* ─── Epilogue actions ────────────────────────────────────────────────────── */
 
 .epilogue-actions {
   display: flex;
@@ -863,45 +629,56 @@ a {
   flex-wrap: wrap;
 }
 
-.primary-link,
+.primary-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.9rem 1.6rem;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #1c0e02;
+  font-weight: 600;
+  font-size: 0.9rem;
+  letter-spacing: 0.01em;
+  border: 1px solid transparent;
+  transition: opacity 180ms ease, transform 180ms ease;
+}
+
+.primary-link:hover {
+  opacity: 0.86;
+  transform: translateY(-1px);
+}
+
 .secondary-link {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0.95rem 1.3rem;
+  padding: 0.9rem 1.4rem;
   border-radius: 999px;
-  border: 1px solid var(--line);
-  transition:
-    transform 180ms ease,
-    border-color 180ms ease,
-    background 180ms ease;
+  background: var(--surface);
+  border: 1px solid var(--line-mid);
+  color: var(--text);
+  font-size: 0.9rem;
+  letter-spacing: 0.01em;
+  transition: background 180ms ease, transform 180ms ease;
 }
 
-.primary-link {
-  background: var(--text);
-  color: var(--bg);
-}
-
-.secondary-link {
-  background: rgba(255, 255, 255, 0.46);
-}
-
-.primary-link:hover,
-.secondary-link:hover,
-.chapter-dot:hover,
-.brand-lockup:hover {
+.secondary-link:hover {
+  background: var(--surface-mid);
   transform: translateY(-1px);
 }
+
+/* ─── Responsive ──────────────────────────────────────────────────────────── */
 
 @media (max-width: 1080px) {
   .scene-sticky {
     grid-template-columns: 1fr;
     align-content: center;
-    padding-top: 128px;
+    padding-top: 132px;
   }
 
   .scene-copy {
-    max-width: 680px;
+    max-width: 640px;
   }
 
   .scene-side {
@@ -912,13 +689,13 @@ a {
   .scene-foot {
     position: relative;
     bottom: auto;
-    margin-top: 18px;
+    margin-top: 20px;
     flex-wrap: wrap;
   }
 
   .lamp-rig .model-stage {
-    width: min(70vw, 560px);
-    height: min(70vw, 560px);
+    width: min(65vw, 580px);
+    height: min(65vw, 580px);
   }
 
   .epilogue-details {
@@ -929,8 +706,8 @@ a {
 @media (max-width: 720px) {
   .journey-topbar {
     inset: 12px 12px auto;
-    align-items: flex-start;
     flex-direction: column;
+    align-items: flex-start;
   }
 
   .brand-lockup {
@@ -946,13 +723,23 @@ a {
     display: none;
   }
 
+  .lamp-rig {
+    opacity: 0.82;
+  }
+
+  .lamp-rig .model-stage {
+    width: min(82vw, 460px);
+    height: min(82vw, 460px);
+  }
+
   .intro-frame,
   .epilogue {
-    width: min(100vw - 24px, 1180px);
+    width: calc(100vw - 32px);
   }
 
   .intro-frame {
-    padding-top: 184px;
+    padding-top: 192px;
+    padding-bottom: 10vh;
   }
 
   .scene {
@@ -960,22 +747,18 @@ a {
   }
 
   .scene-sticky {
-    width: min(100vw - 24px, 1180px);
-    gap: 22px;
-    padding-top: 156px;
-    padding-bottom: 76px;
+    width: calc(100vw - 32px);
+    padding-top: 160px;
+    padding-bottom: 80px;
+    gap: 20px;
   }
 
   .scene-copy h2 {
-    font-size: clamp(2.3rem, 11vw, 3.6rem);
+    font-size: clamp(2.2rem, 10.5vw, 3.4rem);
   }
 
   .scene-side-card {
     max-width: none;
-  }
-
-  .lamp-rig {
-    opacity: 0.86;
   }
 
   .epilogue-card {
@@ -986,6 +769,8 @@ a {
     flex-direction: column;
   }
 }
+
+/* ─── Reduced motion ──────────────────────────────────────────────────────── */
 
 @media (prefers-reduced-motion: reduce) {
   html {
@@ -1002,13 +787,8 @@ a {
   }
 
   .scene-copy,
-  .visual-shell,
-  .visual-frame,
-  .frame-image-a::after,
-  .frame-image-b::before,
-  .frame-image-c::before,
-  .frame-image-c::after,
   .backdrop-ring {
     transform: none !important;
+    opacity: 1 !important;
   }
 }

@@ -59,7 +59,7 @@ export function GlbStage({ src, pose }: GlbStageProps) {
       model.rotation.z = pose.rotateZ * 0.4;
     }
 
-    camera.position.set(0, 1.05, pose.zoom);
+    camera.position.set(0, 0, pose.zoom);
     camera.lookAt(0, 0, 0);
     renderer.render(scene, camera);
   };
@@ -75,7 +75,7 @@ export function GlbStage({ src, pose }: GlbStageProps) {
     sceneRef.current = scene;
 
     const camera = new PerspectiveCamera(38, 1, 0.1, 100);
-    camera.position.set(0, 1.05, pose.zoom);
+    camera.position.set(0, 0, pose.zoom);
     cameraRef.current = camera;
 
     const renderer = new WebGLRenderer({
@@ -123,9 +123,8 @@ export function GlbStage({ src, pose }: GlbStageProps) {
       group.position.sub(center);
 
       const maxDim = Math.max(size.x, size.y, size.z) || 1;
-      const scale = 2.8 / maxDim;
+      const scale = 2.5 / maxDim;
       group.scale.setScalar(scale);
-      group.position.y -= size.y * scale * 0.08;
     };
 
     loader.load(

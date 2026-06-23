@@ -20,21 +20,19 @@ const chapters = [
     id: "arrival",
     label: "Spark",
     kicker: "Chapter 01",
-    title: "A lamp appears at a distance.",
-    copy:
-      "The object enters the story like a quiet signal in a dark room. It is small at first, suspended and remote, so the eye has time to settle before the motion begins.",
-    metrics: ["First light", "Slow reveal", "Measured entry"],
+    title: "A first signal in the dark.",
+    copy: "Every interface begins the same way — a single decision that everything else has to earn its place beside. I start from that decision and design outward, not inward.",
+    metrics: ["React / Three.js", "Scroll-driven", "GLB native"],
     tone: "gold",
-    caption: "The lamp is introduced with restraint.",
+    caption: "The lamp enters the story with restraint.",
   },
   {
     id: "craft",
     label: "Craft",
     kicker: "Chapter 02",
-    title: "Its form travels closer and turns to show the build.",
-    copy:
-      "As the scroll advances, the lamp glides across the composition and rotates just enough to reveal structure, material, and proportion. The motion is deliberate, not decorative.",
-    metrics: ["Closer view", "Gentle rotation", "Material focus"],
+    title: "Inspect the structure — the build tells you everything.",
+    copy: "Getting close to something changes the questions you ask. Material, proportion, the way it handles light — these are design decisions, not finishing touches. So is every line of code.",
+    metrics: ["Material tuned", "Viewport aware", "Precision render"],
     tone: "blue",
     caption: "The lamp shifts toward inspection.",
   },
@@ -42,21 +40,19 @@ const chapters = [
     id: "momentum",
     label: "Glow",
     kicker: "Chapter 03",
-    title: "The lamp becomes the atmosphere around it.",
-    copy:
-      "The story widens here. The lamp fills more of the frame and the viewer starts reading it as presence, not just object. The glow feels continuous with the motion of the page.",
-    metrics: ["Ambient glow", "Deeper zoom", "Continuous flow"],
+    title: "The right light changes the room it is in.",
+    copy: "Great interfaces create atmosphere, not just utility. When something is built right, it shifts the mood of the whole page. You notice the absence before you notice the presence.",
+    metrics: ["Ambient glow", "Depth layered", "Full-frame presence"],
     tone: "violet",
-    caption: "The lamp turns into a source of mood.",
+    caption: "The lamp becomes the atmosphere around it.",
   },
   {
     id: "signal",
     label: "Home",
     kicker: "Chapter 04",
-    title: "The lamp settles into its final frame.",
-    copy:
-      "The last chapter resolves the movement. The lamp arrives fully, turns once more, and rests without looping forever. What remains is a stable image and a finished story.",
-    metrics: ["Final reveal", "Motion resolved", "Calm ending"],
+    title: "It stops moving because it has arrived.",
+    copy: "Every scroll animation should resolve — a final frame that feels deliberate, not abandoned. I design each motion to end on purpose. The last position is as considered as the first.",
+    metrics: ["Final pose", "No loop", "Resolved"],
     tone: "graphite",
     caption: "The lamp ends in a composed final pose.",
   },
@@ -64,69 +60,82 @@ const chapters = [
 
 const details = [
   {
-    name: "Single object narrative",
-    text: "One lamp carries the whole experience, so every chapter feels like part of the same journey.",
+    name: "Single-object storytelling",
+    text: "One lamp carries an entire journey. Every project I work on has this quality — a clear through-line that gives the experience coherence from first view to last.",
   },
   {
-    name: "Scroll choreography",
-    text: "The lamp moves forward with the page instead of spinning on a fixed loop.",
+    name: "Scroll as narrative",
+    text: "The page doesn't animate for decoration. Motion advances a story, reveals information, and rewards the people who take the time to read it.",
   },
   {
-    name: "Resolved ending",
-    text: "The final frame lands in a stable pose, which makes the motion feel intentional and complete.",
+    name: "Endings that land",
+    text: "This stops. That's intentional. Good interfaces don't loop forever — they resolve to a state that makes sense, and leave you with something complete.",
   },
 ];
 
 const lampStops: LampPose[] = [
   {
-    zoom: 7.8,
-    scale: 0.92,
-    rotateX: -0.14,
-    rotateY: -0.5,
-    rotateZ: 0.04,
-    screenX: -16,
-    screenY: 4,
-    screenScale: 0.92,
-    screenRotate: -10,
-  },
-  {
-    zoom: 6.9,
-    scale: 1,
+    zoom: 7.4,
+    scale: 0.9,
     rotateX: -0.1,
-    rotateY: 0.02,
-    rotateZ: 0.02,
-    screenX: -4,
-    screenY: -1,
-    screenScale: 1,
-    screenRotate: -3,
+    rotateY: -0.4,
+    rotateZ: 0.03,
+    screenX: 20,
+    screenY: 0,
+    screenScale: 0.86,
+    screenRotate: 8,
   },
   {
-    zoom: 5.9,
+    zoom: 6.6,
+    scale: 1.0,
+    rotateX: -0.07,
+    rotateY: 0.04,
+    rotateZ: 0.01,
+    screenX: 14,
+    screenY: -1,
+    screenScale: 0.96,
+    screenRotate: 1,
+  },
+  {
+    zoom: 5.6,
     scale: 1.08,
-    rotateX: -0.06,
-    rotateY: 0.56,
+    rotateX: -0.04,
+    rotateY: 0.52,
     rotateZ: -0.01,
     screenX: 10,
-    screenY: -5,
+    screenY: 2,
     screenScale: 1.06,
-    screenRotate: 4,
+    screenRotate: -2,
   },
   {
-    zoom: 5.15,
-    scale: 1.14,
-    rotateX: -0.03,
-    rotateY: 0.98,
+    zoom: 5.0,
+    scale: 1.15,
+    rotateX: -0.01,
+    rotateY: 0.92,
     rotateZ: 0,
-    screenX: 2,
-    screenY: 2,
-    screenScale: 1.14,
+    screenX: 17,
+    screenY: 0,
+    screenScale: 1.12,
     screenRotate: 0,
   },
 ];
 
-function SceneIcon({ path }: { path: string }) {
-  return (
-    <svg aria-hidden="true" viewBox="0 0 24 24" className="scene-icon">
+function SceneIcon({ path, stroke = true }: { path: string; stroke?: boolean }) {
+  return stroke ? (
+    <svg
+      aria-hidden="true"
+      viewBox="0 0 24 24"
+      className="scene-icon"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d={path} />
+    </svg>
+  ) : (
+    <svg aria-hidden="true" viewBox="0 0 24 24" className="scene-icon" fill="currentColor">
       <path d={path} />
     </svg>
   );
@@ -229,14 +238,12 @@ export default function Page() {
 
   return (
     <main className="journey-shell">
-      <div className="journey-orb journey-orb-a" aria-hidden="true" />
-      <div className="journey-orb journey-orb-b" aria-hidden="true" />
-      <div className="journey-grain" aria-hidden="true" />
+      <div className="lamp-ambient" aria-hidden="true" />
 
       <header className="journey-topbar">
         <a className="brand-lockup" href="#arrival">
           <span>Michael Tampus</span>
-          <small>Scrollytelling portfolio</small>
+          <small>Frontend Developer &amp; Designer</small>
         </a>
 
         <nav className="chapter-rail" aria-label="Chapter navigation">
@@ -257,12 +264,13 @@ export default function Page() {
       </div>
 
       <section className="intro-frame">
-        <p className="intro-eyebrow">A lamp story in four chapters</p>
-        <h1>One GLB lamp, told through light, distance, and scroll.</h1>
+        <p className="intro-eyebrow">Portfolio — Scrollytelling</p>
+        <h1>Work that resolves.</h1>
         <p className="intro-copy">
-          The same GLB travels through the page as a single cinematic object.
-          It zooms in, rotates with the scroll, and lands in a final stable pose instead of looping forever.
+          One 3D object. Four chapters. One scroll. This is how I approach every project —
+          with a single clear decision followed all the way through to a deliberate end.
         </p>
+        <a className="intro-cta" href="#arrival">Begin the journey</a>
       </section>
 
       <div className="storyline">
@@ -299,13 +307,13 @@ export default function Page() {
                 </div>
                 <div className="scene-foot">
                   <div className="chapter-index">
-                    <SceneIcon path="M4 12h16M12 4l8 8-8 8" />
+                    <SceneIcon path="M5 12h14M12 5l7 7-7 7" />
                     <span>{String(index + 1).padStart(2, "0")}</span>
                   </div>
                   <div className="scene-note">
                     <span>Scroll</span>
                     <strong>
-                      Section {index + 1} of {chapters.length}
+                      {index + 1} of {chapters.length}
                     </strong>
                   </div>
                 </div>
@@ -318,14 +326,14 @@ export default function Page() {
       <section className="epilogue">
         <div className="epilogue-card">
           <div>
-            <p className="scene-kicker">Epilogue</p>
-            <h2>The lamp moves as one object, and the page ends without a loop.</h2>
+            <p className="scene-kicker epilogue-kicker">Epilogue</p>
+            <h2>A portfolio that is also the proof.</h2>
           </div>
 
           <div className="epilogue-details">
             {details.map((item) => (
               <article key={item.name} className="detail-card">
-                <SceneIcon path="M12 2 2 7l10 5 10-5-10-5Zm0 7L2 4v10l10 5 10-5V4l-10 5Z" />
+                <SceneIcon path="M12 2 2 7l10 5 10-5-10-5Zm0 7L2 4v10l10 5 10-5V4l-10 5Z" stroke={false} />
                 <h3>{item.name}</h3>
                 <p>{item.text}</p>
               </article>
