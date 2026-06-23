@@ -193,17 +193,20 @@ a {
 }
 
 .lamp-rig .model-stage {
-  width: min(52vw, 680px);
-  height: min(52vw, 680px);
+  position: absolute;
+  width: min(44vw, 560px);
+  height: min(44vw, 560px);
   transform-origin: center center;
-  will-change: transform;
+  will-change: transform, left, top;
+  transition: left 0.55s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              top 0.55s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              transform 0.55s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .model-stage {
-  position: relative;
   width: 100%;
   height: 100%;
-  overflow: hidden;
+  overflow: visible;
   background: transparent;
 }
 
@@ -301,6 +304,7 @@ a {
 .scene {
   position: relative;
   min-height: 210vh;
+  scroll-snap-align: start;
   --progress: 0;
   --depth: 0;
 }
@@ -400,10 +404,67 @@ a {
   align-self: center;
   max-width: 480px;
   padding: 0;
+  /* Subtle parallax drift while scrolling through the scene. */
   transform: translate3d(0, calc((1 - var(--progress)) * 38px), 0);
-  opacity: calc(0.48 + var(--progress) * 0.52);
-  transition: opacity 60ms linear;
 }
+
+/* ─── Section entrance animations ─────────────────────────────────────────── */
+
+/* Elements start hidden and slide up once their section gets `.in-view`
+   (toggled by an IntersectionObserver). Staggered via transition-delay. */
+.intro-eyebrow,
+.intro-frame h1,
+.intro-copy,
+.intro-cta,
+.scene-kicker,
+.scene-copy h2,
+.scene-text,
+.scene-metrics,
+.scene-side,
+.epilogue-card > *,
+.detail-card {
+  opacity: 0;
+  transform: translateY(30px);
+  transition:
+    opacity 0.8s ease,
+    transform 0.8s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+.in-view .intro-eyebrow,
+.in-view.intro-frame h1,
+.in-view .intro-copy,
+.in-view .intro-cta,
+.in-view .scene-kicker,
+.in-view .scene-copy h2,
+.in-view .scene-text,
+.in-view .scene-metrics,
+.in-view .scene-side,
+.in-view .epilogue-card > *,
+.in-view .detail-card {
+  opacity: 1;
+  transform: none;
+}
+
+/* Stagger — intro */
+.in-view .intro-eyebrow { transition-delay: 0.05s; }
+.in-view.intro-frame h1 { transition-delay: 0.16s; }
+.in-view .intro-copy { transition-delay: 0.3s; }
+.in-view .intro-cta { transition-delay: 0.44s; }
+
+/* Stagger — story scenes */
+.in-view .scene-kicker { transition-delay: 0.08s; }
+.in-view .scene-copy h2 { transition-delay: 0.2s; }
+.in-view .scene-text { transition-delay: 0.34s; }
+.in-view .scene-metrics { transition-delay: 0.48s; }
+.in-view .scene-side { transition-delay: 0.56s; }
+
+/* Stagger — epilogue */
+.in-view .epilogue-card > *:nth-child(1) { transition-delay: 0.06s; }
+.in-view .epilogue-card > *:nth-child(2) { transition-delay: 0.18s; }
+.in-view .epilogue-card > *:nth-child(3) { transition-delay: 0.3s; }
+.in-view .detail-card:nth-child(1) { transition-delay: 0.22s; }
+.in-view .detail-card:nth-child(2) { transition-delay: 0.34s; }
+.in-view .detail-card:nth-child(3) { transition-delay: 0.46s; }
 
 .scene-kicker {
   margin: 0 0 14px;
@@ -461,44 +522,15 @@ a {
 
 .scene-side {
   align-self: end;
-  display: grid;
-  gap: 18px;
-  justify-items: start;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-height: 100%;
   padding-bottom: 12px;
 }
 
-.scene-side-card {
-  display: grid;
-  gap: 8px;
-  max-width: 22ch;
-  padding: 16px 18px 18px;
-  border-radius: 20px;
-  background: rgba(14, 11, 8, 0.78);
-  border: 1px solid var(--line);
-  box-shadow: var(--shadow-sm);
-  backdrop-filter: blur(24px);
-}
-
-.scene-side-card span {
-  color: var(--muted);
-  text-transform: uppercase;
-  letter-spacing: 0.2em;
-  font-size: 0.62rem;
-  font-weight: 600;
-}
-
-.scene-side-card strong {
-  font-size: 0.96rem;
-  line-height: 1.48;
-  letter-spacing: -0.025em;
-  color: var(--text);
-}
-
 .scene-foot {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 26px;
+  margin-top: auto;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -553,9 +585,13 @@ a {
 /* ─── Epilogue ────────────────────────────────────────────────────────────── */
 
 .epilogue {
+  min-height: 100vh;
+  scroll-snap-align: start;
   width: var(--measure);
   margin: 0 auto;
   padding: 24px 0 100px;
+  display: flex;
+  align-items: center;
 }
 
 .epilogue-card {
@@ -687,15 +723,13 @@ a {
   }
 
   .scene-foot {
-    position: relative;
-    bottom: auto;
     margin-top: 20px;
     flex-wrap: wrap;
   }
 
   .lamp-rig .model-stage {
-    width: min(65vw, 580px);
-    height: min(65vw, 580px);
+    width: min(58vw, 520px);
+    height: min(58vw, 520px);
   }
 
   .epilogue-details {
@@ -728,8 +762,8 @@ a {
   }
 
   .lamp-rig .model-stage {
-    width: min(82vw, 460px);
-    height: min(82vw, 460px);
+    width: min(78vw, 440px);
+    height: min(78vw, 440px);
   }
 
   .intro-frame,
@@ -755,10 +789,6 @@ a {
 
   .scene-copy h2 {
     font-size: clamp(2.2rem, 10.5vw, 3.4rem);
-  }
-
-  .scene-side-card {
-    max-width: none;
   }
 
   .epilogue-card {
